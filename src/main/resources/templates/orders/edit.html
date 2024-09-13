@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Order</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Order Management</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/orders">Orders List</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <h3>Edit Order</h3>
+    <form th:action="@{/orders/{id}/update(id=${order.orderId})}" th:object="${order}" method="post">
+        <input type="hidden" th:field="*{orderId}" />
+
+        <!-- Product Category Dropdown -->
+        <div class="form-group">
+            <label for="productCategory">Product Category</label>
+            <select id="productCategory" th:field="*{product.productCategory.categoryId}" class="form-control" required>
+                <option value="" disabled selected>Select a Category</option>
+                <option th:each="category : ${productTypes}"
+                        th:value="${category.categoryId}"
+                        th:text="${category.categoryName}"></option>
+            </select>
+        </div>
+
+        <!-- Product Dropdown -->
+        <div class="form-group">
+            <label for="product">Product</label>
+            <select id="product" th:field="*{product.productId}" class="form-control" required>
+                <option value="" disabled selected>Select a Product</option>
+                <option th:each="product : ${products}"
+                        th:value="${product.productId}"
+                        th:text="${product.productName}"></option>
+            </select>
+        </div>
+
+        <!-- Order Date -->
+        <div class="form-group">
+            <label for="orderDate">Order Date</label>
+            <input type="datetime-local" id="orderDate" th:field="*{orderDate}" class="form-control" required>
+        </div>
+
+        <!-- Quantity -->
+        <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input type="number" id="quantity" th:field="*{quantity}" class="form-control" min="1" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
